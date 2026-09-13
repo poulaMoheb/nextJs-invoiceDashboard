@@ -1,7 +1,20 @@
+import { fetchFilteredCustomers } from "@/app/lib/data"
+import CustomersTable from "@/app/ui/customers/table"
 
-function page() {
+async function page(props: {
+    searchParams: Promise<{
+        query: string
+    }>
+}) {
+    const searchParams = await props.searchParams;
+    const query = searchParams.query || '';
+    const allCustomers = await fetchFilteredCustomers(query);
+
+
     return (
-        <div>page</div>
+        <div>
+            <CustomersTable customers={allCustomers} />
+        </div>
     )
 }
 
